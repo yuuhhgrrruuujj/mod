@@ -1,5 +1,14 @@
 const { readdirSync } = require('fs');
 const { Client, Collection } = require('discord.js');
+const express = require('express'); // Add express
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Tiny web server for Uptime Robot
+app.get("/", (req, res) => res.send("Bot is running!"));
+app.listen(PORT, () => console.log(`Web server listening on port ${PORT}`));
+
+// Discord client
 const client = new Client({
   partials: ['MESSAGE', 'REACTION'],
   intents: ['GUILDS', 'GUILD_MEMBERS', 'GUILD_MESSAGES', 'GUILD_MESSAGE_REACTIONS']
@@ -23,4 +32,5 @@ readdirSync('./Events').forEach(folder => {
   });
 });
 
+// Login to Discord
 client.login(process.env.token);
